@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+
+using std::vector;
+
+vector<unsigned>& collatz(unsigned n)
+{
+	static vector<unsigned> tmp;
+	if(tmp.size()) tmp.clear();
+	tmp.push_back(n);
+	while(n!=1)
+	{
+		n = (n%2)?n=3*n+1:n/=2;
+		tmp.push_back(n);
+	}
+	return tmp;
+}
+			
+
+int main()
+{
+	unsigned chain = 0, num;
+	
+	for(auto i=1; i<1000000; ++i)
+	{
+		//std::cout << i <<":"<< (collatz(i)).size()<<std::endl;
+		auto tmp = (collatz(i)).size();
+		if(tmp>chain)
+		{
+			chain=tmp;
+			num=i;
+		}
+	}	
+	std::cout << num << ":" << chain << std::endl;
+	//for(auto i: collatz(27))
+	//	std::cout << i << ",";
+	return 0;
+}
